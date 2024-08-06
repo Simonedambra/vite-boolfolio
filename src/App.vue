@@ -1,11 +1,17 @@
 <script>
 import axios, { Axios } from 'axios';
-import projects from './components/project.vue';
+
+import AppHeader from './components/AppHeader.vue';
+import AppFooter from './components/AppFooter.vue';
+import ProjectList from './pages/ProjectList.vue';
 import { store } from './store';
 export default{
   title:'project_app',
   components: {
-    projects  // Registra il componente Project
+    AppHeader,
+    AppFooter,
+    ProjectList
+      
   },
   data(){
 return {
@@ -18,8 +24,8 @@ return {
 getprojects() {
             axios.get(this.store.apiUrl)
                 .then((response) => {
-                  console.log(response.data)
-                    this.store.projects= response.data
+                  this.store.projects = response.data.results;
+                  console.log(this.store.projects);
                 })
                 .catch(error => {
                     console.error(error);
@@ -36,9 +42,10 @@ getprojects() {
 };
 </script> 
 <template>
-  <h1>Vue Vite Template</h1>
+  <AppHeader></AppHeader>
   
-  <projects></projects>
-  <p>Template di partenza per progetti Vite Vue</p>
+  <ProjectList></ProjectList>
+ 
+  <AppFooter></AppFooter>
 </template>
 <!-- <style></style> -->
