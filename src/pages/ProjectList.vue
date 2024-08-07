@@ -1,14 +1,56 @@
 <script>
 import { store } from '../store';
+import axios, { Axios } from 'axios';
 
   export default {
     name: 'Projects',
     
       data(){
         return{
-            store
+            store,
+            correntpage:1,
         }
+
       },
+      methods:{
+        Prevpage(){
+          console.log('prev')
+          if (this.correntpage > 1){
+            this.correntpage--;
+            this.getprojects();
+          }
+
+
+        },
+        Nextpage(){
+          console.log('next')
+          if (this.correntpage < 4){
+            this.correntpage++;
+            this.getprojects();
+          }
+          
+        },
+        
+    getprojects() {
+                axios.get(this.store.apiUrl, {params:{
+                  page:this.correntpage
+                }})
+                    .then((response) => {
+                      this.store.projects = response.data.results.data;
+                      console.log(this.store.projects);
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            },
+    
+    
+      },
+      created(){
+        this.getprojects();
+        
+      }
+        
       
     
 }
@@ -35,7 +77,13 @@ import { store } from '../store';
      
     </div>
     <div class="container">
+      <nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" @click="Prevpage()">Previous</a></li>
     
+    <li class="page-item"><a class="page-link" @click="Nextpage()">Next</a></li>
+  </ul>
+</nav>
     </div>
   </template>
   
