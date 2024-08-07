@@ -1,17 +1,25 @@
 <script>
-import { store } from '../store';
+
 import axios, { Axios } from 'axios';
+import projectcard from './projectcard.vue';
 
   export default {
     name: 'Projects',
-    
+    components:{
+        projectcard
+},
       data(){
         return{
-            store,
+            apiUrl:'http://127.0.0.1:8000/api/project',
+            projects:[],
+            response:{},
             correntpage:1,
+            
         }
+        
 
       },
+      
       methods:{
         Prevpage(){
           console.log('prev')
@@ -32,12 +40,12 @@ import axios, { Axios } from 'axios';
         },
         
     getprojects() {
-                axios.get(this.store.apiUrl, {params:{
+                axios.get(this.apiUrl, {params:{
                   page:this.correntpage
                 }})
                     .then((response) => {
-                      this.store.projects = response.data.results.data;
-                      console.log(this.store.projects);
+                      this.response=response.data.results
+                      
                     })
                     .catch(error => {
                         console.error(error);
@@ -61,8 +69,17 @@ import axios, { Axios } from 'axios';
   
   </script>
   <template>
-    <div class="container d-flex gap-5 justify-content-center my-5">
-      <div  v-for="project in this.store.projects":key="project.id">
+    <div class="container d-flex py-5">
+      <div class="col"v-for="project in response.data"> 
+
+        <projectcard :title="project.title" :slug="project.slug"></projectcard>
+
+
+      </div>
+    </div>
+
+    <!-- <div class="container d-flex gap-5 justify-content-center my-5">
+      <div  v-for="">
 
         <div class="card" style="width: 18rem;">
     
@@ -70,12 +87,14 @@ import axios, { Axios } from 'axios';
             <h5 class="card-title">{{project.title}}</h5>
             
             
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+           <router-link :to="{ name: 'ProjectDetail', params: { slug} }" class="btn btn-primary">
+dattaglio
+</router-link>
           </div>
         </div>
       </div>
      
-    </div>
+    </div>-->
     <div class="container">
       <nav aria-label="Page navigation example">
   <ul class="pagination">
