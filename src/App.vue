@@ -21,10 +21,12 @@ return {
 }
   },
   methods:{
+    
+        
 getprojects() {
             axios.get(this.store.apiUrl)
                 .then((response) => {
-                  this.store.projects = response.data.results;
+                  this.store.projects = response.data.results.data;
                   console.log(this.store.projects);
                 })
                 .catch(error => {
@@ -44,7 +46,7 @@ getprojects() {
 <template>
   <AppHeader></AppHeader>
   
-  <ProjectList></ProjectList>
+  <router-view></router-view>
  
   <AppFooter></AppFooter>
 </template>

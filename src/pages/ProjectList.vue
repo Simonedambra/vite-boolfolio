@@ -8,13 +8,19 @@ import { store } from '../store';
         return{
             store
         }
-      }
-    }
-  ;
+      },
+      
+    
+}
+  
+
+  
+
+  
   </script>
   <template>
-    <div class="container d-flex gap-5 justify-content-center">
-      <div  v-for="(project, index) in this.store.projects.data":key="project.id">
+    <div class="container d-flex gap-5 justify-content-center my-5">
+      <div  v-for="project in this.store.projects":key="project.id">
 
         <div class="card" style="width: 18rem;">
     
@@ -26,8 +32,11 @@ import { store } from '../store';
           </div>
         </div>
       </div>
+     
     </div>
+    <div class="container">
     
+    </div>
   </template>
   
   <style scoped>
